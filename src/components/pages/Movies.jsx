@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Screening from "../Screening";
+import MovieForm from "../MovieForm";
+import EditMovieForm from "../EditMovieForm";
 
 const Movies = () => {
 
-    const movies = [
-  {
+  const [editingMovie, setEditingMovie] = useState(null);
+  
+
+    const [movies, setMovies] = useState([{
     title: "Captain America - The First Avenger",
     hall: 2,
     price: 350,
@@ -30,25 +34,38 @@ const Movies = () => {
   {
     title: "Bullet Train",
     poster: "https://m.media-amazon.com/images/I/71INz6LX8aL._AC_UF894,1000_QL80_.jpg"
+  }])
+
+  const handleAddMovie = (newMovieData) => {
+    setMovies(prevMovies => [...prevMovies, newMovieData]);
   }
-];
+  const editMovie = (data) => {
+    setMovies(prev => prev.map(element => (element.title === editingMovie.title ? data : element)))
+    setEditingMovie(null);
+  }
 
 const dateTime = new Date().toLocaleDateString("sr-RS");
 
 
     return (
         <div>
-        <h1>Repertoar filmova za danas ({dateTime})</h1>
-        <div>
-    {movies?.length > 0 ? (
-      movies.map(movie => (
-        <Screening key={movie.title} movie={movie} />
-      ))
-    ): (
-      <p>Nema dostupnih filmova.</p>
-    )}
-  </div>
-  </div>
+          {editingMovie === null && (
+          <MovieForm onAddMovie={handleAddMovie} />
+          )}
+          <h1>Repertoar filmova za danas ({dateTime})</h1>
+          <div>
+            { editingMovie ? (
+              <EditMovieForm movie={editingMovie} onUpdate={editMovie}/>
+            ): (movies?.length > 0 ? (
+            movies.map(movie => (
+            <Screening key={movie.title} movie={movie} onEdit={() => setEditingMovie(movie)} />
+            ))
+            ): (
+            <p>Nema dostupnih filmova.</p>
+            ))
+            }
+          </div>
+        </div>
     )
 }
 

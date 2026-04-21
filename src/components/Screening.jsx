@@ -28,6 +28,7 @@ const Screening = (props) => {
                 : " - Film jos uvek nije u ponudi"}
             </p>
         </div>
+            <button className="edit-btn" onClick={props.onEdit}>Izmeni</button>
     </div>
   );
 }
