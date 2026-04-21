@@ -35,9 +35,6 @@ const Movies = () => {
 
 const dateTime = new Date().toLocaleDateString("sr-RS");
 
-const handleReaction = (movie, action) => {
-  alert(`Dodelili ste "${action}" za film "${movie.title}"!`)
-}
 
     return (
         <div>
@@ -45,7 +42,7 @@ const handleReaction = (movie, action) => {
         <div>
     {movies?.length > 0 ? (
       movies.map(movie => (
-        <Screening movie={movie} onReaction={handleReaction} />
+        <Screening key={movie.title} movie={movie} />
       ))
     ): (
       <p>Nema dostupnih filmova.</p>

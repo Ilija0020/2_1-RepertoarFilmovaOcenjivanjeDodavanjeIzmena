@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Screening = (props) => {
+
+    const [likes , setLikes] = useState(0);
+    const [dislikes, setDislikes] = useState(0);
+
     const handleLike = () => {
-        props.onReaction(props.movie, "Like")
+        setLikes(prev => prev + 1)
     }
     const handleDislike = () => {
-        props.onReaction(props.movie, "Dislike")
+        setDislikes(prev => prev + 1)
     }
   return (
     <div className="movie-card">
@@ -15,6 +19,7 @@ const Screening = (props) => {
                 <button onClick={handleLike}>Like</button>
                 <button onClick={handleDislike}>Dislike</button>
             </div>
+            <p className="movie-stats">👍: {likes} | 👎: {dislikes}</p>
         </div>
         <div className="movie-right">
             <p>
